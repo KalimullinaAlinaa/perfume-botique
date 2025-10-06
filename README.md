@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Fixed full-stack shop project (Angular + FastAPI) - prepared Oct 2025
 -----------------------------------------------------------------
 Backend: FastAPI + SQLModel + SQLite (shop.db auto-created & seeded)
@@ -16,3 +17,6 @@ Frontend usage (inside frontend folder):
 Notes:
 - This archive fixes dependency mismatches (SQLModel vs SQLAlchemy and zone.js vs Angular).
 - SQLite file `shop.db` will be created in backend when server starts.
+=======
+# perfume-botique
+>>>>>>> c011e17844c75047eec99ea6db06fcafee240d8e
