@@ -1,0 +1,12 @@
+<div *ngIf="product; else loading">
+    <h2>{{ product.name }}</h2>
+    <img *ngIf="product.image" [src]="product.image" alt="{{product.name}}" style="max-width:300px">
+    <p>{{ product.description }}</p>
+    <p>Цена: {{ product.price | currency }}</p>
+    <button (click)="addToCart()">Добавить в корзину</button>
+  </div>
+  <ng-template #loading>
+    <p *ngIf="loading">Загрузка...</p>
+    <p *ngIf="!loading">Товар не найден</p>
+  </ng-template>
+  

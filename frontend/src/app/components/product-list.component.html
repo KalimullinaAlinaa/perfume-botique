@@ -1,0 +1,44 @@
+<div class="product-container">
+  <!-- Фильтры и поиск -->
+  <div class="filters-container">
+    <div class="search-box">
+      <span class="material-icons search-icon">search</span>
+      <input 
+        type="text" 
+        class="search-input" 
+        placeholder="Поиск ароматов..."
+        (input)="applyFilter($event)"
+      >
+    </div>
+  </div>
+
+  <!-- Сетка продуктов -->
+  <div class="products-grid">
+    <mat-card *ngFor="let product of filteredProducts" class="product-card">
+      <div class="product-image-container">
+        <img 
+          [src]="'assets/images/' + product.id + '.jpg'" 
+          [alt]="product.title"
+          class="product-image"
+          onerror="this.src='assets/images/no-image.png'"
+        >
+        <div class="product-overlay"></div>
+      </div>
+
+      <mat-card-content class="product-content">
+        <h3 class="product-title">{{ product.title }}</h3>
+        <p class="product-price">{{ product.price | currency:'RUB':'symbol-narrow' }}</p>
+        <p class="product-description">{{ product.description }}</p>
+      </mat-card-content>
+
+      <button 
+        mat-raised-button 
+        class="add-to-cart-btn" 
+        (click)="addToCart(product)"
+      >
+        <mat-icon>add_shopping_cart</mat-icon> 
+        В корзину
+      </button>
+    </mat-card>
+  </div>
+</div>

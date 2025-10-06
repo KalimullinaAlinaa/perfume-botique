@@ -1,0 +1,22 @@
+<div class="checkout-container" *ngIf="items.length; else emptyCart">
+  <h2>Оформление заказа</h2>
+
+  <div class="checkout-items">
+    <div class="checkout-item" *ngFor="let item of items">
+      <span>{{ item.title }} (x{{ item.qty }})</span>
+      <span>{{ item.price * item.qty | currency:'KZT' }}</span>
+    </div>
+  </div>
+
+  <div class="checkout-total">
+    <h3>Итого: {{ total | currency:'KZT' }}</h3>
+  </div>
+
+  <button mat-raised-button color="primary" (click)="submitOrder()">
+    Подтвердить заказ
+  </button>
+</div>
+
+<ng-template #emptyCart>
+  <p>Корзина пуста. Добавьте товары перед оформлением заказа.</p>
+</ng-template>

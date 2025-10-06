@@ -1,0 +1,37 @@
+.container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .masonry {
+    column-count: 3;
+    column-gap: 16px;
+  }
+  @media (max-width: 900px) {
+    .masonry {
+      column-count: 2;
+    }
+  }
+  @media (max-width: 600px) {
+    .masonry {
+      column-count: 1;
+    }
+  }
+  .card {
+    break-inside: avoid;
+    margin-bottom: 16px;
+  }
+  mat-card img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  .brand {
+    font-size: 0.9rem;
+    color: #555;
+  }
+  .price {
+    font-weight: 700;
+    margin-top: 8px;
+  }
+  

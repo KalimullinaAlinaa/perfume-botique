@@ -1,0 +1,162 @@
+.custom-toolbar {
+  background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+  color: #831843;
+  box-shadow: 0 2px 20px rgba(190, 118, 154, 0.15);
+  border-bottom: 1px solid #fbcfe8;
+  padding: 0 1rem;
+  height: 70px;
+}
+
+.toolbar-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Логотип */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: all 0.3s ease;
+  padding: 0.5rem;
+  border-radius: 12px;
+}
+
+.logo:hover {
+  background: rgba(236, 72, 153, 0.1);
+  transform: translateY(-1px);
+}
+
+.logo-icon {
+  font-size: 1.8rem;
+  filter: drop-shadow(0 2px 4px rgba(236, 72, 153, 0.3));
+}
+
+.logo-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #ec4899, #be4b8a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+}
+
+/* Кнопка корзины */
+.cart-btn {
+  color: #831843;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  margin-right: 1rem;
+  transition: all 0.3s ease;
+  border: 1px solid #fbcfe8;
+  position: relative;
+}
+
+.cart-btn:hover {
+  background: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(236, 72, 153, 0.2);
+  color: #ec4899;
+}
+
+.cart-icon {
+  font-size: 1.4rem;
+}
+
+::ng-deep .mat-badge-accent .mat-badge-content {
+  background: linear-gradient(135deg, #ec4899, #be4b8a);
+  color: white;
+  font-weight: 600;
+  font-size: 0.7rem;
+  min-width: 20px;
+  height: 20px;
+  line-height: 20px;
+}
+
+/* Кнопка авторизации */
+.auth-btn {
+  color: #831843;
+  border: 1px solid #fbcfe8;
+  border-radius: 25px;
+  padding: 0 1.5rem;
+  height: 42px;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.auth-btn:hover {
+  background: white;
+  border-color: #ec4899;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(236, 72, 153, 0.15);
+  color: #ec4899;
+}
+
+.auth-icon {
+  font-size: 1.2rem;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .toolbar-content {
+    padding: 0 0.5rem;
+  }
+  
+  .logo-text {
+    font-size: 1.2rem;
+  }
+  
+  .logo-icon {
+    font-size: 1.5rem;
+  }
+  
+  .auth-btn span {
+    display: none;
+  }
+  
+  .auth-btn {
+    padding: 0 0.75rem;
+    min-width: auto;
+  }
+  
+  .auth-btn .auth-icon {
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .custom-toolbar {
+    padding: 0 0.5rem;
+    height: 60px;
+  }
+  
+  .logo-text {
+    font-size: 1.1rem;
+  }
+  
+  .logo-icon {
+    font-size: 1.3rem;
+  }
+  
+  .cart-btn {
+    width: 42px;
+    height: 42px;
+    margin-right: 0.5rem;
+  }
+}

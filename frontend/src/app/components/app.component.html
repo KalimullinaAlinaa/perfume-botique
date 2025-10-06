@@ -1,0 +1,36 @@
+<mat-toolbar class="custom-toolbar">
+  <div class="toolbar-content">
+    <!-- Логотип -->
+    <div class="logo" (click)="router.navigate([''])" style="cursor: pointer;">
+      <span class="logo-icon">🌸</span>
+      <span class="logo-text">Perfume Boutique</span>
+    </div>
+
+    <span class="spacer"></span>
+
+    <!-- Корзина -->
+    <button 
+      mat-icon-button 
+      class="cart-btn"
+      [matBadge]="cartCount" 
+      matBadgeColor="accent"
+      (click)="router.navigate(['/cart'])" 
+      aria-label="Cart"
+      matTooltip="Корзина"
+    >
+      <mat-icon class="cart-icon">shopping_bag</mat-icon>
+    </button>
+
+    <!-- Авторизация -->
+    <button 
+      mat-stroked-button 
+      class="auth-btn"
+      (click)="openAuthDialog()"
+    >
+      <mat-icon class="auth-icon">account_circle</mat-icon>
+      Войти
+    </button>
+  </div>
+</mat-toolbar>
+
+<router-outlet></router-outlet>

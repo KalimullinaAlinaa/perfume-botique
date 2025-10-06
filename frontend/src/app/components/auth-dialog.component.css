@@ -1,0 +1,125 @@
+.auth-dialog {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(190, 118, 154, 0.1);
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .auth-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .auth-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #831843;
+    margin-bottom: 0.5rem;
+  }
+  
+  .auth-subtitle {
+    color: #a16281;
+    font-size: 0.95rem;
+  }
+  
+  .auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .form-label {
+    font-weight: 500;
+    color: #5a3d3d;
+    font-size: 0.95rem;
+  }
+  
+  .form-input {
+    padding: 0.75rem 1rem;
+    border: 1px solid #fbcfe8;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #831843;
+    background: #fdf2f8;
+    transition: all 0.3s ease;
+  }
+  
+  .form-input:focus {
+    outline: none;
+    border-color: #ec4899;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
+  }
+  
+  .form-input::placeholder {
+    color: #d4a6b9;
+  }
+  
+  .submit-btn {
+    background: linear-gradient(to right, #ec4899, #be4b8a);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 0.875rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
+    margin-top: 0.5rem;
+  }
+  
+  .submit-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(236, 72, 153, 0.4);
+  }
+  
+  .submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+  
+  .auth-footer {
+    text-align: center;
+    margin-top: 1rem;
+  }
+  
+  .toggle-btn {
+    background: none;
+    border: none;
+    color: #be4b8a;
+    cursor: pointer;
+    font-size: 0.9rem;
+    text-decoration: underline;
+    transition: color 0.2s ease;
+  }
+  
+  .toggle-btn:hover {
+    color: #831843;
+  }
+  
+  /* Анимации */
+  @keyframes fadeIn {
+    from { 
+      opacity: 0; 
+      transform: translateY(-10px); 
+    }
+    to { 
+      opacity: 1; 
+      transform: translateY(0); 
+    }
+  }
+  
+  .auth-dialog {
+    animation: fadeIn 0.3s ease;
+  }

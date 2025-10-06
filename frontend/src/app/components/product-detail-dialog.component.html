@@ -1,0 +1,14 @@
+<div class="container" *ngIf="product">
+  <mat-card>
+    <img mat-card-image [src]="product.image || 'https://source.unsplash.com/random/600x600?perfume'">
+    <mat-card-title>{{ product.name }}</mat-card-title>
+    <mat-card-content>
+      <p>{{ product.description }}</p>
+      <p><strong>{{ product.price | currency:'RUB' }}</strong></p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="addToCart()">Добавить в корзину</button>
+      <button mat-button (click)="router.navigate([''])">Назад</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

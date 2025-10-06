@@ -1,0 +1,15 @@
+<div class="products-container">
+    <mat-card
+      *ngFor="let product of products"
+      class="product-card"
+      (click)="openProduct(product)"
+    >
+      <img mat-card-image [src]="product.image" alt="{{ product.name }}" />
+      <mat-card-content>
+        <h3>{{ product.name }}</h3>
+        <p>{{ product.price | number }} ₸</p>
+      </mat-card-content>
+      <button mat-raised-button color="primary">В корзину</button>
+    </mat-card>
+  </div>
+  
