@@ -12,7 +12,7 @@
       </div>
       <div class="cart-item-content">
         <h3 class="cart-item-title">{{ item.title }}</h3>
-        <p class="cart-item-price">{{ item.price | currency:'RUB':'symbol-narrow' }}</p>
+        <p class="cart-item-price">{{ item.price }} ₽</p>
         <div class="qty-controls">
           <div class="qty-selector">
             <button class="qty-btn" (click)="updateQty(item, item.qty - 1)">−</button>
@@ -31,22 +31,29 @@
     <h2 class="summary-title">Ваш заказ</h2>
     <div class="summary-row">
       <span>Товары ({{ totalItems }})</span>
-      <span>{{ subtotal | currency:'RUB':'symbol-narrow' }}</span>
+      <span>{{ subtotal }} ₽</span>
     </div>
     <div class="summary-row">
       <span>Доставка</span>
-      <span>{{ delivery | currency:'RUB':'symbol-narrow' }}</span>
+      <span>{{ delivery }} ₽</span>
     </div>
     <div class="summary-row">
       <span>Скидка</span>
-      <span style="color: #10b981;">-{{ discount | currency:'RUB':'symbol-narrow' }}</span>
+      <span style="color: #10b981;">-{{ discount }} ₽</span>
     </div>
-    <div class="summary-row summary-total">
+    <div class="summary-total">
       <span>Итого</span>
-      <span>{{ total | currency:'RUB':'symbol-narrow' }}</span>
+      <span>{{ total }} ₽</span>
     </div>
-    <button class="checkout-btn" (click)="checkout()">Оформить заказ</button>
-    <a class="continue-shopping" (click)="continueShopping()">Продолжить покупки</a>
+    
+    <!-- Кнопка оформления заказа -->
+    <button class="checkout-btn" (click)="goToCheckout()">
+      Перейти к оформлению
+    </button>
+    
+    <a class="continue-shopping" (click)="continueShopping()">
+      Продолжить покупки
+    </a>
   </div>
 </div>
 
@@ -56,7 +63,9 @@
       <mat-icon>sentiment_dissatisfied</mat-icon>
     </div>
     <h3>Ваша корзина пуста</h3>
-    <p>Добавьте ароматы, чтобы продолжить покупки</p>
-    <a class="continue-shopping" (click)="continueShopping()">Исследовать каталог</a>
+    <p>Добавьте изысканные ароматы, чтобы продолжить покупки</p>
+    <a class="continue-shopping" (click)="continueShopping()">
+      Исследовать каталог
+    </a>
   </div>
 </ng-template>

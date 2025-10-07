@@ -4,11 +4,10 @@ import { ProductListComponent } from './components/product-list.component';
 import { CartComponent } from './components/cart.component';
 import { CheckoutComponent } from './components/checkout.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   { path: '', component: ProductListComponent },
-  { path: 'catalog', component: ProductListComponent },
   { path: 'cart', component: CartComponent },
-  { path: 'checkout', component: CheckoutComponent }  ,
+  { path: 'checkout', component: CheckoutComponent },
   { path: '**', redirectTo: '' }
 ];
 

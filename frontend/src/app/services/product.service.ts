@@ -16,8 +16,7 @@ export interface Product {
   providedIn: 'root'
 })
 export class ProductService {
-  private apiUrl = environment.apiUrl; // http://localhost:8000/api
-  private authUrl = environment.apiUrl.replace('/api', ''); // http://localhost:8000
+  private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
@@ -33,21 +32,5 @@ export class ProductService {
 
   get(id: string): Observable<Product> {
     return this.http.get<Product>(`${this.apiUrl}/products/${id}`);
-  }
-
-  // Аутентификация - используем authUrl без /api
-  register(username: string, password: string, full?: string) {
-    return this.http.post(`${this.authUrl}/auth/register`, { 
-      username, 
-      password, 
-      full_name: full 
-    });
-  }
-
-  login(username: string, password: string) {
-    return this.http.post(`${this.authUrl}/auth/login`, { 
-      username, 
-      password 
-    });
   }
 }

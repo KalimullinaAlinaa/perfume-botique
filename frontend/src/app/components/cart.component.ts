@@ -18,8 +18,12 @@ export class CartComponent implements OnInit {
     return this.subtotal > 0 ? 500 : 0;
   }
   
+  get discount() {
+    return this.subtotal > 50000 ? 2500 : 0;
+  }
+  
   get total() {
-    return this.subtotal + this.delivery;
+    return this.subtotal + this.delivery - this.discount;
   }
   
   get totalItems() {
@@ -46,13 +50,13 @@ export class CartComponent implements OnInit {
     this.cart.remove(id);
   }
 
-  checkout(): void {
+  // Новый метод для перехода к оформлению заказа
+  goToCheckout(): void {
     if (this.items.length === 0) {
       alert('Корзина пуста!');
       return;
     }
-    alert('Заказ оформлен! Спасибо за покупку!');
-    this.cart.clear();
+    this.router.navigate(['/checkout']);
   }
 
   continueShopping(): void {

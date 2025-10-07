@@ -8,6 +8,35 @@
 
     <span class="spacer"></span>
 
+    <!-- Информация о пользователе -->
+    <div class="user-info" *ngIf="currentUser; else authButtons">
+      <div class="user-badge">
+        <mat-icon class="user-icon">account_circle</mat-icon>
+        <span class="username">{{currentUser.username}}</span>
+        <div class="online-dot"></div>
+      </div>
+      <button 
+        mat-stroked-button 
+        class="logout-btn"
+        (click)="logout()"
+      >
+        <mat-icon class="logout-icon">logout</mat-icon>
+        Выйти
+      </button>
+    </div>
+
+    <ng-template #authButtons>
+      <!-- Кнопка авторизации -->
+      <button 
+        mat-stroked-button 
+        class="auth-btn"
+        (click)="openAuthDialog()"
+      >
+        <mat-icon class="auth-icon">account_circle</mat-icon>
+        Войти
+      </button>
+    </ng-template>
+
     <!-- Корзина -->
     <button 
       mat-icon-button 
@@ -19,16 +48,6 @@
       matTooltip="Корзина"
     >
       <mat-icon class="cart-icon">shopping_bag</mat-icon>
-    </button>
-
-    <!-- Авторизация -->
-    <button 
-      mat-stroked-button 
-      class="auth-btn"
-      (click)="openAuthDialog()"
-    >
-      <mat-icon class="auth-icon">account_circle</mat-icon>
-      Войти
     </button>
   </div>
 </mat-toolbar>

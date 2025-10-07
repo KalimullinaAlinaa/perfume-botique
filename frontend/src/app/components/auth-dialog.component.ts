@@ -1,7 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ProductService } from '../services/product.service';
-import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-auth-dialog',
@@ -16,13 +15,11 @@ export class AuthDialogComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<AuthDialogComponent>,
-    private ps: ProductService,
-    private router: Router
+    private authService: AuthService
   ) {}
 
   toggleMode(): void {
     this.data.mode = this.data.mode === 'register' ? 'login' : 'register';
-    // Очищаем поля при переключении
     this.username = '';
     this.password = '';
     this.full = '';
@@ -30,7 +27,7 @@ export class AuthDialogComponent {
 
   submit(): void {
     if (this.data.mode === 'register') {
-      this.ps.register(this.username, this.password, this.full).subscribe({
+      this.authService.register(this.username, this.password, this.full).subscribe({
         next: () => {
           alert('🎀 Регистрация успешна! Добро пожаловать!');
           this.dialogRef.close(true);
@@ -45,9 +42,8 @@ export class AuthDialogComponent {
         }
       });
     } else {
-      this.ps.login(this.username, this.password).subscribe({
-        next: (response: any) => {
-          console.log('Вход успешен:', response);
+      this.authService.login(this.username, this.password).subscribe({
+        next: () => {
           alert('🎀 Вход успешен! Рады видеть вас снова!');
           this.dialogRef.close(true);
         },

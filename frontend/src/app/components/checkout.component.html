@@ -1,22 +1,177 @@
-<div class="checkout-container" *ngIf="items.length; else emptyCart">
-  <h2>Оформление заказа</h2>
+<div class="checkout-container">
+  <div class="checkout-content">
+    <!-- Левая часть - форма -->
+    <div class="checkout-form-section">
+      <h2 class="section-title">Оформление заказа</h2>
+      
+      <form (ngSubmit)="submitOrder" class="checkout-form">
+        <!-- Личные данные -->
+        <div class="form-section">
+          <h3 class="form-section-title">Личные данные</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">Имя *</label>
+              <input 
+                type="text" 
+                id="firstName" 
+                #firstNameInput
+                required
+                class="form-input"
+                placeholder="Введите ваше имя"
+              >
+            </div>
+            
+            <div class="form-group">
+              <label for="lastName">Фамилия *</label>
+              <input 
+                type="text" 
+                id="lastName" 
+                #lastNameInput
+                required
+                class="form-input"
+                placeholder="Введите вашу фамилию"
+              >
+            </div>
+          </div>
+        </div>
 
-  <div class="checkout-items">
-    <div class="checkout-item" *ngFor="let item of items">
-      <span>{{ item.title }} (x{{ item.qty }})</span>
-      <span>{{ item.price * item.qty | currency:'KZT' }}</span>
+        <!-- Контактная информация -->
+        <div class="form-section">
+          <h3 class="form-section-title">Контактная информация</h3>
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input 
+              type="email" 
+              id="email" 
+              #emailInput
+              required
+              class="form-input"
+              placeholder="your@email.com"
+            >
+          </div>
+          
+          <div class="form-group">
+            <label for="phone">Телефон *</label>
+            <input 
+              type="tel" 
+              id="phone" 
+              #phoneInput
+              required
+              class="form-input"
+              placeholder="+7 (999) 999-99-99"
+            >
+          </div>
+        </div>
+
+        <!-- Адрес доставки -->
+        <div class="form-section">
+          <h3 class="form-section-title">Адрес доставки</h3>
+          <div class="form-group">
+            <label for="address">Адрес *</label>
+            <input 
+              type="text" 
+              id="address" 
+              #addressInput
+              required
+              class="form-input"
+              placeholder="Улица, дом, квартира"
+            >
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="city">Город *</label>
+              <input 
+                type="text" 
+                id="city" 
+                #cityInput
+                required
+                class="form-input"
+                placeholder="Город"
+              >
+            </div>
+            
+            <div class="form-group">
+              <label for="postalCode">Почтовый индекс</label>
+              <input 
+                type="text" 
+                id="postalCode" 
+                #postalCodeInput
+                class="form-input"
+                placeholder="123456"
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Комментарий -->
+        <div class="form-section">
+          <h3 class="form-section-title">Дополнительно</h3>
+          <div class="form-group">
+            <label for="comment">Комментарий к заказу</label>
+            <textarea 
+              id="comment" 
+              #commentInput
+              class="form-textarea"
+              placeholder="Ваши пожелания к заказу..."
+              rows="4"
+            ></textarea>
+          </div>
+        </div>
+
+        <button 
+          type="submit" 
+          class="submit-btn"
+          [disabled]="items.length === 0"
+        >
+          Подтвердить заказ - {{ total + 500 }} ₽
+        </button>
+      </form>
+    </div>
+
+    <!-- Правая часть - итоги заказа -->
+    <div class="order-summary">
+      <h2 class="section-title">Ваш заказ</h2>
+      
+      <div class="order-items">
+        <div class="order-item" *ngFor="let item of items">
+          <div class="order-item-image">
+            <img 
+              [src]="'assets/images/' + item.id + '.jpg'" 
+              [alt]="item.title"
+              onerror="this.src='assets/images/no-image.png'"
+            >
+          </div>
+          <div class="order-item-details">
+            <h4>{{ item.title }}</h4>
+            <p>{{ item.qty }} × {{ item.price }} ₽</p>
+          </div>
+          <div class="order-item-total">
+            {{ (item.price * item.qty) }} ₽
+          </div>
+        </div>
+      </div>
+
+      <div class="order-totals">
+        <div class="total-row">
+          <span>Товары ({{ items.length }})</span>
+          <span>{{ total }} ₽</span>
+        </div>
+        <div class="total-row">
+          <span>Доставка</span>
+          <span>500 ₽</span>
+        </div>
+        <div class="total-row final-total">
+          <span>Итого</span>
+          <span>{{ total + 500 }} ₽</span>
+        </div>
+      </div>
+
+      <div class="delivery-info">
+        <h4>📦 Информация о доставке</h4>
+        <p>Доставка осуществляется в течение 2-3 рабочих дней</p>
+        <p>Бесплатная доставка при заказе от 5000 ₽</p>
+      </div>
     </div>
   </div>
-
-  <div class="checkout-total">
-    <h3>Итого: {{ total | currency:'KZT' }}</h3>
-  </div>
-
-  <button mat-raised-button color="primary" (click)="submitOrder()">
-    Подтвердить заказ
-  </button>
 </div>
-
-<ng-template #emptyCart>
-  <p>Корзина пуста. Добавьте товары перед оформлением заказа.</p>
-</ng-template>

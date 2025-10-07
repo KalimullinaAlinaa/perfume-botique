@@ -1,77 +1,64 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule, Routes } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthDialogComponent } from './components/auth-dialog.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
-import { HttpClientModule } from '@angular/common/http';
-
-// Material Modules
-import { MatToolbarModule } from '@angular/material/toolbar';
-
-import { MatIconModule } from '@angular/material/icon';
-import { MatBadgeModule } from '@angular/material/badge';
-
-
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
-
-// Components
 import { AppComponent } from './components/app.component';
-import { CatalogComponent } from './components/catalog.component';
-import { ProductDetailComponent } from './components/product-detail.component';
+import { ProductListComponent } from './components/product-list.component';
 import { CartComponent } from './components/cart.component';
 import { CheckoutComponent } from './components/checkout.component';
+import { AuthDialogComponent } from './components/auth-dialog.component';
+
+// Material imports
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 // Services
-import { CartService } from './services/cart.service';
-import { ProductService } from './services/product.service';
-import { ApiService } from './services/api.service';
-import { AppRoutingModule } from './app-routing.module';
-import { ProductListComponent } from './components/product-list.component';
+import { AuthInterceptor } from './services/auth.interceptor';
 
-const routes: Routes = [
-  { path: '', component: CatalogComponent },
-  { path: 'cart', component: CartComponent },
-  { path: 'checkout', component: CheckoutComponent },
-  { path: 'auth', component: AuthDialogComponent },
-];
+// Routes
+import { routes } from './app-routing.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CatalogComponent,
-    ProductDetailComponent,
+    ProductListComponent,
     CartComponent,
-    AuthDialogComponent,
     CheckoutComponent,
-    ProductListComponent 
+    AuthDialogComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule,
-    RouterModule.forRoot(routes),
     HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
+    FormsModule, 
+    RouterModule.forRoot(routes),
     
-    // Angular Material
+    // Material modules
     MatToolbarModule,
+    MatCardModule,
+    MatButtonModule,
     MatIconModule,
     MatBadgeModule,
-    MatButtonModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
     MatDialogModule,
-  ]
-  ,
-  providers: [CartService, ProductService, ApiService],
-  bootstrap: [AppComponent],
+    MatFormFieldModule,
+    MatInputModule
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
+  bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
