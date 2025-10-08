@@ -10,7 +10,7 @@
 
     <!-- Информация о пользователе -->
     <div class="user-info" *ngIf="currentUser; else authButtons">
-      <div class="user-badge">
+      <div class="user-badge" (click)="router.navigate(['/account'])">
         <mat-icon class="user-icon">account_circle</mat-icon>
         <span class="username">{{currentUser.username}}</span>
         <div class="online-dot"></div>

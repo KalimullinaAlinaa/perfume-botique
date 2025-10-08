@@ -1,15 +1,135 @@
-<div class="products-container">
-    <mat-card
-      *ngFor="let product of products"
-      class="product-card"
-      (click)="openProduct(product)"
+<div class="catalog-container">
+  <!-- Заголовок -->
+  <div class="catalog-header">
+    <h1>🌸 Коллекция парфюмерии</h1>
+    <p>Откройте для себя мир изысканных ароматов</p>
+  </div>
+
+  <!-- Фильтры -->
+  <div class="filters-section">
+    <!-- Поиск -->
+    <div class="search-box">
+      <input 
+        type="text" 
+        [value]="searchQuery"
+        (input)="onSearchChange($event)"
+        placeholder="Поиск парфюма..."
+        class="search-input"
+      >
+      <span class="search-icon">🔍</span>
+    </div>
+
+    <!-- Категории -->
+    <div class="category-filters">
+      <button 
+        [class.active]="selectedCategory === 'all'"
+        (click)="onCategoryChange('all')"
+        class="category-btn"
+      >
+        Все ароматы
+      </button>
+      <button 
+        [class.active]="selectedCategory === 'women'"
+        (click)="onCategoryChange('women')"
+        class="category-btn"
+      >
+        👩 Женские
+      </button>
+      <button 
+        [class.active]="selectedCategory === 'men'"
+        (click)="onCategoryChange('men')"
+        class="category-btn"
+      >
+        👨 Мужские
+      </button>
+    </div>
+  </div>
+
+  <!-- Информация о результатах -->
+  <div *ngIf="searchQuery || selectedCategory !== 'all'" class="results-info">
+    <p>
+      Найдено {{filteredProducts.length}} товаров 
+      <span *ngIf="searchQuery">по запросу "{{searchQuery}}"</span>
+      <span *ngIf="selectedCategory !== 'all'">в категории "{{getCategoryName(selectedCategory)}}"</span>
+    </p>
+    <button 
+      *ngIf="filteredProducts.length === 0"
+      (click)="searchQuery = ''; selectedCategory = 'all'; filterProducts()"
+      class="clear-filters-btn"
     >
-      <img mat-card-image [src]="product.image" alt="{{ product.name }}" />
-      <mat-card-content>
-        <h3>{{ product.name }}</h3>
-        <p>{{ product.price | number }} ₸</p>
+      Очистить фильтры
+    </button>
+  </div>
+
+  <!-- Загрузка -->
+  <div *ngIf="isLoading" class="loading">
+    <div class="spinner"></div>
+    <p>Загружаем коллекцию ароматов...</p>
+  </div>
+
+  <!-- Сетка товаров -->
+  <div *ngIf="!isLoading" class="products-container">
+    <mat-card
+      *ngFor="let product of filteredProducts"
+      class="product-card"
+      [class.women]="product.category === 'women'"
+      [class.men]="product.category === 'men'"
+    >
+      <div class="product-image-container">
+        <img 
+          mat-card-image 
+          [src]="product.image" 
+          [alt]="product.name"
+          (error)="product.image = 'assets/images/no-image.png'"
+          class="product-image"
+        />
+        <div class="category-badge" [class]="product.category">
+          {{ product.category === 'women' ? '👩' : '👨' }}
+        </div>
+        <div class="product-overlay">
+          <button 
+            mat-raised-button 
+            color="primary" 
+            class="quick-view-btn"
+            (click)="openProduct(product)"
+          >
+            Быстрый просмотр
+          </button>
+        </div>
+      </div>
+
+      <mat-card-content class="product-content">
+        <h3 class="product-name">{{ product.name }}</h3>
+        <p class="product-description">{{ product.description }}</p>
+        <div class="product-price">{{ product.price | number }} ₽</div>
       </mat-card-content>
-      <button mat-raised-button color="primary">В корзину</button>
+
+      <div class="product-actions">
+        <button 
+          mat-raised-button 
+          color="primary" 
+          class="add-to-cart-btn"
+          (click)="addToCart(product); $event.stopPropagation()"
+        >
+          <span class="btn-icon">🛒</span>
+          В корзину
+        </button>
+      </div>
     </mat-card>
   </div>
-  
+
+  <!-- Сообщение если нет товаров -->
+  <div *ngIf="!isLoading && filteredProducts.length === 0" class="no-products">
+    <div class="no-products-icon">💫</div>
+    <h3>Ароматы не найдены</h3>
+    <p>Попробуйте изменить параметры поиска или выбрать другую категорию</p>
+    <button 
+      mat-raised-button 
+      color="primary"
+      (click)="searchQuery = ''; selectedCategory = 'all'; filterProducts()"
+      class="show-all-btn"
+    >
+      Показать все ароматы
+    </button>
+  </div>
+</div>

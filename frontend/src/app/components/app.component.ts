@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-// Исправляем пути - поднимаемся на уровень выше
 import { AuthDialogComponent } from './auth-dialog.component';
 import { CartService } from '../services/cart.service';
 import { AuthService } from '../services/auth.service';
@@ -16,7 +15,7 @@ export class AppComponent implements OnInit {
   currentUser: any = null;
 
   constructor(
-    public router: Router,
+    public router: Router, // Убедись что router публичный
     private dialog: MatDialog,
     private cartService: CartService,
     private authService: AuthService
@@ -26,7 +25,7 @@ export class AppComponent implements OnInit {
     console.log('🚀 AppComponent инициализирован');
     
     // Подписка на корзину
-    this.cartService.cart$.subscribe(() => {
+    this.cartService.cart$.subscribe((items) => {
       this.cartCount = this.cartService.getCount();
       console.log('🛒 Количество товаров в корзине:', this.cartCount);
     });
@@ -35,17 +34,11 @@ export class AppComponent implements OnInit {
     this.authService.currentUser$.subscribe(user => {
       this.currentUser = user;
       console.log('👤 Текущий пользователь:', user);
-      console.log('🔐 Авторизован:', !!user);
     });
 
     // Инициализируем начальные значения
     this.cartCount = this.cartService.getCount();
     this.currentUser = this.authService.getCurrentUser();
-    
-    console.log('📊 Начальное состояние:');
-    console.log('   - Товаров в корзине:', this.cartCount);
-    console.log('   - Пользователь:', this.currentUser);
-    console.log('   - Токен в localStorage:', this.authService.getToken());
   }
 
   openAuthDialog(): void {

@@ -1,0 +1,257 @@
+<div class="account-container">
+    <!-- Заголовок -->
+    <div class="account-header">
+      <div class="header-content">
+        <div class="header-icon">👤</div>
+        <div class="header-text">
+          <h1>Личный кабинет</h1>
+          <p>Управление вашими заказами и профилем</p>
+        </div>
+      </div>
+    </div>
+  
+    <div class="account-content">
+      <!-- Боковое меню -->
+      <div class="account-sidebar">
+        <div class="sidebar-card">
+          <div class="user-avatar">
+            <mat-icon class="avatar-icon">account_circle</mat-icon>
+            <div class="avatar-status"></div>
+          </div>
+          <div class="user-info" *ngIf="customerData">
+            <h3>{{ customerData.name }}</h3>
+            <p>{{ customerData.email }}</p>
+          </div>
+          <div class="user-info" *ngIf="!customerData">
+            <h3>Гость</h3>
+            <p>Заполните профиль</p>
+          </div>
+        </div>
+  
+        <nav class="sidebar-nav">
+          <button 
+            class="nav-item" 
+            [class.active]="activeTab === 'profile'"
+            (click)="setActiveTab('profile')"
+          >
+            <mat-icon>person</mat-icon>
+            <span>Профиль</span>
+          </button>
+          <button 
+            class="nav-item" 
+            [class.active]="activeTab === 'active-orders'"
+            (click)="setActiveTab('active-orders')"
+          >
+            <mat-icon>local_shipping</mat-icon>
+            <span>Активные заказы</span>
+            <span class="badge" *ngIf="getActiveOrders().length > 0">
+              {{ getActiveOrders().length }}
+            </span>
+          </button>
+          <button 
+            class="nav-item" 
+            [class.active]="activeTab === 'order-history'"
+            (click)="setActiveTab('order-history')"
+          >
+            <mat-icon>history</mat-icon>
+            <span>История заказов</span>
+          </button>
+        </nav>
+      </div>
+  
+      <!-- Основной контент -->
+      <div class="account-main">
+        <!-- Профиль -->
+        <div *ngIf="activeTab === 'profile'" class="tab-content">
+          <div class="tab-header">
+            <h2>Личная информация</h2>
+            <p>Ваши контактные данные и адрес доставки</p>
+          </div>
+          
+          <div *ngIf="customerData; else noProfile" class="profile-content">
+            <div class="info-cards">
+              <div class="info-card">
+                <div class="card-header">
+                  <mat-icon class="card-icon">contact_mail</mat-icon>
+                  <h3>Контактные данные</h3>
+                </div>
+                <div class="card-content">
+                  <div class="info-row">
+                    <span class="info-label">ФИО:</span>
+                    <span class="info-value">{{ customerData.name }}</span>
+                  </div>
+                  <div class="info-row">
+                    <span class="info-label">Email:</span>
+                    <span class="info-value">{{ customerData.email }}</span>
+                  </div>
+                  <div class="info-row">
+                    <span class="info-label">Телефон:</span>
+                    <span class="info-value">{{ customerData.phone }}</span>
+                  </div>
+                </div>
+              </div>
+  
+              <div class="info-card">
+                <div class="card-header">
+                  <mat-icon class="card-icon">location_on</mat-icon>
+                  <h3>Адрес доставки</h3>
+                </div>
+                <div class="card-content">
+                  <div class="info-row">
+                    <span class="info-label">Адрес:</span>
+                    <span class="info-value">{{ customerData.address }}</span>
+                  </div>
+                  <div *ngIf="customerData.postalCode" class="info-row">
+                    <span class="info-label">Почтовый индекс:</span>
+                    <span class="info-value">{{ customerData.postalCode }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="profile-note">
+              <mat-icon>info</mat-icon>
+              <p>Данные будут автоматически заполнены при следующем заказе</p>
+            </div>
+          </div>
+  
+          <ng-template #noProfile>
+            <div class="no-data">
+              <div class="no-data-icon">💫</div>
+              <h3>Профиль не заполнен</h3>
+              <p>Ваши данные появятся здесь после первого заказа</p>
+              <button 
+                mat-raised-button 
+                color="primary" 
+                class="action-btn"
+                (click)="goToCatalog()"
+              >
+                <mat-icon>store</mat-icon>
+                Перейти к покупкам
+              </button>
+            </div>
+          </ng-template>
+        </div>
+  
+        <!-- Активные заказы -->
+        <div *ngIf="activeTab === 'active-orders'" class="tab-content">
+          <div class="tab-header">
+            <h2>Активные заказы</h2>
+            <p>Текущие заказы в процессе обработки и доставки</p>
+          </div>
+          
+          <div *ngIf="getActiveOrders().length > 0; else noActiveOrders" class="orders-grid">
+            <div *ngFor="let order of getActiveOrders()" class="order-card">
+              <div class="order-header">
+                <div class="order-info">
+                  <h3>Заказ #{{ order.id }}</h3>
+                  <span class="order-date">{{ order.date | date:'dd.MM.yyyy HH:mm' }}</span>
+                </div>
+                <span class="status-badge" [class]="getStatusClass(order.status)">
+                  {{ getStatusText(order.status) }}
+                </span>
+              </div>
+              
+              <div class="order-items">
+                <div *ngFor="let item of order.items" class="order-item">
+                  <div class="item-info">
+                    <span class="item-name">{{ item.product_title }}</span>
+                    <span class="item-details">{{ item.quantity }} × {{ item.price }} ₽</span>
+                  </div>
+                  <span class="item-total">{{ item.price * item.quantity }} ₽</span>
+                </div>
+              </div>
+              
+              <div class="order-footer">
+                <div class="order-address">
+                  <mat-icon>location_on</mat-icon>
+                  <span>{{ order.customer.address }}</span>
+                </div>
+                <div class="order-total">
+                  <span>Итого:</span>
+                  <strong>{{ order.total }} ₽</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <ng-template #noActiveOrders>
+            <div class="no-data">
+              <div class="no-data-icon">🚚</div>
+              <h3>Нет активных заказов</h3>
+              <p>Здесь будут отображаться ваши текущие заказы</p>
+              <button 
+                mat-raised-button 
+                color="primary" 
+                class="action-btn"
+                (click)="goToCatalog()"
+              >
+                <mat-icon>store</mat-icon>
+                Перейти к покупкам
+              </button>
+            </div>
+          </ng-template>
+        </div>
+  
+        <!-- История заказов -->
+        <div *ngIf="activeTab === 'order-history'" class="tab-content">
+          <div class="tab-header">
+            <h2>История заказов</h2>
+            <p>Все ваши завершенные заказы</p>
+          </div>
+          
+          <div *ngIf="getCompletedOrders().length > 0; else noOrderHistory" class="orders-grid">
+            <div *ngFor="let order of getCompletedOrders()" class="order-card completed">
+              <div class="order-header">
+                <div class="order-info">
+                  <h3>Заказ #{{ order.id }}</h3>
+                  <span class="order-date">{{ order.date | date:'dd.MM.yyyy HH:mm' }}</span>
+                </div>
+                <span class="status-badge" [class]="getStatusClass(order.status)">
+                  {{ getStatusText(order.status) }}
+                </span>
+              </div>
+              
+              <div class="order-items">
+                <div *ngFor="let item of order.items" class="order-item">
+                  <div class="item-info">
+                    <span class="item-name">{{ item.product_title }}</span>
+                    <span class="item-details">{{ item.quantity }} × {{ item.price }} ₽</span>
+                  </div>
+                  <span class="item-total">{{ item.price * item.quantity }} ₽</span>
+                </div>
+              </div>
+              
+              <div class="order-footer">
+                <div class="order-comment" *ngIf="order.comment">
+                  <mat-icon>chat_bubble</mat-icon>
+                  <span>{{ order.comment }}</span>
+                </div>
+                <div class="order-total">
+                  <span>Итого:</span>
+                  <strong>{{ order.total }} ₽</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <ng-template #noOrderHistory>
+            <div class="no-data">
+              <div class="no-data-icon">📦</div>
+              <h3>История заказов пуста</h3>
+              <p>Здесь будут отображаться ваши завершенные заказы</p>
+              <button 
+                mat-raised-button 
+                color="primary" 
+                class="action-btn"
+                (click)="goToCatalog()"
+              >
+                <mat-icon>shopping_bag</mat-icon>
+                Сделать первый заказ
+              </button>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>

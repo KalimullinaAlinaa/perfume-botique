@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import SQLModel, Session, select
 from .db import engine
 from . import auth, crud, models
+import datetime
 
 app = FastAPI(title='Perfume Shop API')
 
@@ -29,32 +30,63 @@ def on_startup():
         statement = select(models.Product)
         first = session.exec(statement).first()
         if not first:
-            # Добавляем парфюмы вместо одежды
+            # Добавляем парфюмы
             perfumes = [
                 models.Product(
                     title='Chanel Coco Mademoiselle', 
                     description='Изысканный цветочный аромат с нотами бергамота и жасмина', 
-                    price=25990.0, 
-                    image_url='chanel-coco.jpg'
+                    price=7500.0, 
                 ),
                 models.Product(
                     title='Miss Dior Blooming Bouquet', 
                     description='Нежный и романтичный аромат с аккордами пиона и розы', 
-                    price=29500.0, 
-                    image_url='miss-dior.jpg'
+                    price=6800.0, 
                 ),
                 models.Product(
-                    title='Black Opium', 
-                    description='Смелый и загадочный аромат с кофе и ванилью', 
-                    price=32750.0, 
-                    image_url='black-opium.jpg'
-                ),
-                models.Product(
-                    title='J\'adore Dior', 
+                    title='Versace Bright Crystal', 
                     description='Бессмертная классика с нотами иланг-иланга и розы', 
-                    price=27800.0, 
-                    image_url='jadore.jpg'
+                    price=6900.0, 
+                ),
+                models.Product(
+                    title='Berberry HER', 
+                    description='Женский, кондитерский парфюм со сладкой ватой', 
+                    price=7800.0, 
+                ),
+                models.Product(
+                    title='Prada Flower', 
+                    description='Утонченный женский парфюм с цитрусовыми нотами', 
+                    price=8200.0, 
+                ),
+                models.Product(
+                    title='Gucci Bloom', 
+                    description='Цветочный женский аромат с нотами жасмина и туберозы', 
+                    price=6500.0, 
+                ),
+                models.Product(
+                    title='Dior Addict', 
+                    description='Элегантный женский парфюм с нотами фруктов и лимона', 
+                    price=5800.0, 
+                ),
+                models.Product(
+                    title='La Vie Est Belle Lancôme', 
+                    description='Солнечный женский аромат с ирисовыми нотами и карамелью', 
+                    price=7100.0, 
+                ),
+                models.Product(
+                    title='Versace Eros', 
+                    description='Яркий мужской парфюм с нотами мяты и зеленого яблока', 
+                    price=5900.0, 
+                    image_url='assets/images/versace-eros.jpg'
                 )
             ]
             session.add_all(perfumes)
             session.commit()
+            print("бд заполнена")
+
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to Perfume Boutique API"}
+
+@app.get("/health")
+def health_check():
+    return {"status": "healthy", "service": "Perfume Boutique API"}

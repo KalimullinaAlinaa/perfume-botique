@@ -3,13 +3,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './components/app.component';
 import { ProductListComponent } from './components/product-list.component';
 import { CartComponent } from './components/cart.component';
 import { CheckoutComponent } from './components/checkout.component';
 import { AuthDialogComponent } from './components/auth-dialog.component';
+import { AccountComponent } from './components/account.component';
 
 // Material imports
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -20,12 +20,13 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatTabsModule } from '@angular/material/tabs';
 
 // Services
 import { AuthInterceptor } from './services/auth.interceptor';
 
-// Routes
-import { routes } from './app-routing.module';
+// Routing
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -33,14 +34,15 @@ import { routes } from './app-routing.module';
     ProductListComponent,
     CartComponent,
     CheckoutComponent,
-    AuthDialogComponent
+    AuthDialogComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule, 
-    RouterModule.forRoot(routes),
+    AppRoutingModule, // ИМПОРТИРУЕМ МОДУЛЬ МАРШРУТИЗАЦИИ
     
     // Material modules
     MatToolbarModule,
@@ -50,7 +52,8 @@ import { routes } from './app-routing.module';
     MatBadgeModule,
     MatDialogModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatTabsModule
   ],
   providers: [
     {

@@ -4,7 +4,7 @@
     <div class="checkout-form-section">
       <h2 class="section-title">Оформление заказа</h2>
       
-      <form (ngSubmit)="submitOrder" class="checkout-form">
+      <form (ngSubmit)="submitOrder()" class="checkout-form">
         <!-- Личные данные -->
         <div class="form-section">
           <h3 class="form-section-title">Личные данные</h3>
@@ -119,6 +119,33 @@
           </div>
         </div>
 
+        <div class="form-section">
+          <h3 class="form-section-title">Дополнительно</h3>
+          <div class="form-group">
+            <label for="comment">Комментарий к заказу</label>
+            <textarea 
+              id="comment" 
+              #commentInput
+              class="form-textarea"
+              placeholder="Ваши пожелания к заказу..."
+              rows="4"
+            ></textarea>
+          </div>
+          
+          <!-- Кнопка очистки данных -->
+          <div class="form-actions" *ngIf="customerData">
+            <button 
+              type="button" 
+              class="clear-data-btn"
+              (click)="clearCustomerData()"
+            >
+              🧹 Очистить сохраненные данные
+            </button>
+            <p class="auto-fill-note">
+              📝 Форма заполнена автоматически из вашего предыдущего заказа
+            </p>
+          </div>
+        </div>
         <button 
           type="submit" 
           class="submit-btn"

@@ -270,3 +270,40 @@
     height: 80px;
   }
 }
+/* Стили для автозаполнения */
+.form-actions {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.clear-data-btn {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.3s ease;
+}
+
+.clear-data-btn:hover {
+  background: #5a6268;
+}
+
+.auto-fill-note {
+  margin: 0.5rem 0 0 0;
+  color: #28a745;
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+/* Подсветка автозаполненных полей */
+input:autofill,
+input:-webkit-autofill {
+  background-color: #f0f9ff !important;
+  border-color: #b3e0ff !important;
+}

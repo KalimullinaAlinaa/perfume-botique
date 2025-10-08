@@ -19,15 +19,14 @@ class Product(SQLModel, table=True):
 
 class Order(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
-    user_id: Optional[int] = Field(default=None, foreign_key="user.id")
-    total: float
-    status: str = Field(default="pending")  
+    customer_name: str  # ДОБАВЛЕНО: отсутствовало в модели
     customer_email: str
     customer_phone: str
     customer_address: str
+    total: float
+    status: str = Field(default="pending")  
     created_at: datetime = Field(default_factory=datetime.utcnow)
     
-
     order_items: List["OrderItem"] = Relationship(back_populates="order")
 
 class OrderItem(SQLModel, table=True):

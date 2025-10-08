@@ -64,6 +64,15 @@
   border-radius: 25px;
   border: 1px solid #fbcfe8;
   position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.user-badge:hover {
+  background: white;
+  border-color: #ec4899;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(236, 72, 153, 0.15);
 }
 
 .user-icon {
@@ -238,6 +247,12 @@
   .cart-btn {
     width: 42px;
     height: 42px;
+    margin-right: 0.5rem;
+  }
+  
+  .auth-btn {
+    height: 38px;
+    padding: 0 0.75rem;
     margin-right: 0.5rem;
   }
 }
